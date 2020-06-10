@@ -91,7 +91,7 @@ namespace COM3D2.VRYotogiPositionControler
             CameraTransform = OvrMgr.OvrCamera.GetBaseHeadTransform();
 
 
-            // 左（右）のコントローラのトリガーを握ったまま、右（左）のコントローラのボタンで移動させる
+            // 左（右）のコントローラのトリガーを握ったまま、右（左）のコントローラのボタンで移動させる(IsReverseMode = trueなら)
             if (LeftController.controller_buttons.GetTriggerRate() == 1)
             {
                 IsMoveX = IsContinueMove(IsReverseMode ? RightAxis.x : LeftAxis.x,
