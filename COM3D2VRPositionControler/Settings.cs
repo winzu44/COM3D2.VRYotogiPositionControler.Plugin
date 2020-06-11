@@ -18,11 +18,11 @@ namespace COM3D2VRPositionControler
     class Settings
     {
 
-        // デフォルトでの設定値 設定ファイルが存在しない時にはこの値がセットされる
+        // デフォルトでの設定値 設定ファイルが存在しない時、読み込めない時にはにはこの値がセットされる
         public static bool IsReverseMode = true;
         public static bool IsAbsoluteMoveMode = false;
-        public static float MoveSpeed = 0.05f;
-        public static float UpSpeed = 0.5f;
+        public static float MoveSpeed = 0.025f;
+        public static float UpSpeed = 0.025f;
         public static float SpinSpeed = 1;
 
         private static string dll_path;
@@ -46,8 +46,8 @@ namespace COM3D2VRPositionControler
 
                     IsReverseMode = System.Convert.ToBoolean(settings.IsReverseMode);
                     IsAbsoluteMoveMode = System.Convert.ToBoolean(settings.IsAbsoluteMoveMode);
-                    MoveSpeed = int.Parse(settings.MoveSpeed) * 0.001f;
-                    UpSpeed = int.Parse(settings.UpSpeed) * 0.01f;
+                    MoveSpeed = int.Parse(settings.MoveSpeed) * 0.0005f;
+                    UpSpeed = int.Parse(settings.UpSpeed) * 0.0005f;
                     SpinSpeed = int.Parse(settings.SpinSpeed) * 0.02f;
 
                     UnityEngine.Debug.Log("VRYPC: 設定ファイルを読み込みました。");

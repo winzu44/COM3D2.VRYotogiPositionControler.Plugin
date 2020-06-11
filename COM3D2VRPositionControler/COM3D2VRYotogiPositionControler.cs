@@ -12,7 +12,6 @@ using UnityInjector.Attributes;
 
 
 
-// まずはコントローラの入力をdebug.logできるかを確認してみる
 
 namespace COM3D2.VRYotogiPositionControler
 {
@@ -70,11 +69,6 @@ namespace COM3D2.VRYotogiPositionControler
                 UpSpeed = Settings.UpSpeed;
                 SpinSpeed = Settings.SpinSpeed;
             }
-            Debug.Log(IsReverseMode);
-            Debug.Log(IsAbsoluteMoveMode);
-            Debug.Log(MoveSpeed);
-            Debug.Log(UpSpeed);
-            Debug.Log(SpinSpeed);
         }
 
         public void Update()
@@ -174,8 +168,10 @@ namespace COM3D2.VRYotogiPositionControler
             {
                 RealCameraTransform = OvrMgr.OvrCamera.GetRealHeadTransform();
                 B_Position = RealCameraTransform.transform.position;
+                // 現在のヘッドセットの向きに入力分だけ進める　進めた後の座標と現在の座標との差をDifに格納している
                 RealCameraTransform.transform.Translate(transform.forward * Axis.y * MoveSpeed + transform.right * Axis.x * MoveSpeed);
                 Dif = RealCameraTransform.transform.position - B_Position;            
+                // ベースの座標を動かすためにDifを足してやる
                 Position = CameraTransform.transform.position + Dif;
                 RealCameraTransform.transform.Translate(-transform.forward * Axis.y * MoveSpeed - transform.right * Axis.x * MoveSpeed);
                 OvrMgr.OvrCamera.SetPos(Position);
@@ -194,7 +190,7 @@ namespace COM3D2.VRYotogiPositionControler
 
             else if (Axis.y >= 0.70 || Axis.y <= -0.70)
             {
-                CameraTransform.transform.Translate(transform.up * Axis.y * MoveSpeed * UpSpeed);
+                CameraTransform.transform.Translate(transform.up * Axis.y * UpSpeed);
                 Position = CameraTransform.transform.position;
                 OvrMgr.OvrCamera.SetPos(Position);
             }
