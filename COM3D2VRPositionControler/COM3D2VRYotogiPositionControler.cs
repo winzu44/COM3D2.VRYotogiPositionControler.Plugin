@@ -70,6 +70,11 @@ namespace COM3D2.VRYotogiPositionControler
                 UpSpeed = Settings.UpSpeed;
                 SpinSpeed = Settings.SpinSpeed;
             }
+            Debug.Log(IsReverseMode);
+            Debug.Log(IsAbsoluteMoveMode);
+            Debug.Log(MoveSpeed);
+            Debug.Log(UpSpeed);
+            Debug.Log(SpinSpeed);
         }
 
         public void Update()

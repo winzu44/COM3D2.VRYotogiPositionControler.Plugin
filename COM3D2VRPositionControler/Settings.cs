@@ -18,7 +18,7 @@ namespace COM3D2VRPositionControler
     class Settings
     {
 
-        // デフォルトでの設定値 設定ファイルが存在しない時にはこの値で設定ファイルを作成
+        // デフォルトでの設定値 設定ファイルが存在しない時にはこの値がセットされる
         public static bool IsReverseMode = true;
         public static bool IsAbsoluteMoveMode = false;
         public static float MoveSpeed = 0.05f;
@@ -47,7 +47,7 @@ namespace COM3D2VRPositionControler
                     IsReverseMode = System.Convert.ToBoolean(settings.IsReverseMode);
                     IsAbsoluteMoveMode = System.Convert.ToBoolean(settings.IsAbsoluteMoveMode);
                     MoveSpeed = int.Parse(settings.MoveSpeed) * 0.001f;
-                    UpSpeed = int.Parse(settings.Upspeed) * 0.01f;
+                    UpSpeed = int.Parse(settings.UpSpeed) * 0.01f;
                     SpinSpeed = int.Parse(settings.SpinSpeed) * 0.02f;
 
                     UnityEngine.Debug.Log("VRYPC: 設定ファイルを読み込みました。");
@@ -63,7 +63,14 @@ namespace COM3D2VRPositionControler
             }
             else
             {
-                UnityEngine.Debug.Log("VRYPC: 設定ファイルが存在しません。デフォルトの設定を読み込みます。");
+                FileStream file = new FileStream(full_path, FileMode.Create);
+                file.Close();
+                XmlSerializer serializer = new XmlSerializer(typeof(xml_settings.SettingsInfo));
+                var settings = new xml_settings.SettingsInfo { IsReverseMode = "true", IsAbsoluteMoveMode = "false", MoveSpeed = "50", UpSpeed = "50", SpinSpeed = "50" };
+                // var streamwriter = new StreamWriter(full_path, false, Encoding.UTF8);
+                StreamWriter writer = new StreamWriter(full_path, false, new UTF8Encoding(false));
+                serializer.Serialize(writer, settings);
+                UnityEngine.Debug.Log("VRYPC: 設定ファイルが存在しません。デフォルトの設定ファイルを作成します。");
                 return false; 
             }        
         }
@@ -85,7 +92,7 @@ namespace xml_settings
         public string MoveSpeed { get; set; }
 
         [XmlElement("UpSpeed")]
-        public string Upspeed { get; set; }
+        public string UpSpeed { get; set; }
 
         [XmlElement("SpinSpeed")]
         public string SpinSpeed { get; set; }
